@@ -11,5 +11,8 @@ url = "https://api.apr.dev"
 cluster = "Localnet"
 wallet = "/home/anoy/.config/solana/id.json"
 
+[test]
+startup_wait = 10000
+
 [scripts]
-test = "node tests/gifportal.js"
+test = "yarn run mocha -t 1000000 tests/"
