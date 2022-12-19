@@ -1,8 +1,10 @@
 const anchor = require('@project-serum/anchor')
+const { AnchorProvider, web3 } =  require('@project-serum/anchor');
+const {SystemProgram} = web3;
 
 const main = async() => {
   console.log('Starting tests ...')
-  const provider = anchor.AnchorProvider.local()
+  const provider = AnchorProvider.local();
   anchor.setProvider(provider)
   const program = anchor.workspace.Gifportal
 
@@ -11,14 +13,25 @@ const main = async() => {
     accounts:{
       baseAccount: baseAccount.publicKey,
       user:provider.wallet.publicKey,
-      systemProgram: anchor.web3.SystemProgram.programId
+      systemProgram: SystemProgram.programId
     },
-    signers:{baseAccount}
+    signers:[baseAccount]
   })
   console.log("Your transaction signature : ", tx)
 
   let account = await program.account.baseAccount.fetch(baseAccount.publicKey)
   console.log("GIF Count", account.totalGifs.toString())
+
+  await program.rpc.addGif("https://media.giphy.com/media/lJHHrtHIpL4qY3wCEy/giphy.gif", {
+    accounts:{
+      baseAccount: baseAccount.publicKey,
+      user:provider.wallet.publicKey
+    },
+  })
+
+  account = await program.account.baseAccount.fetch(baseAccount.publicKey)
+  console.log("GIF Count", account.totalGifs.toString())
+  console.log("GIF List", account.gifList)
 }
 
 const runMain = async() => {

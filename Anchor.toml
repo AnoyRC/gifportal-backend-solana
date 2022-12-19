@@ -2,7 +2,7 @@
 seeds = false
 skip-lint = false
 [programs.localnet]
-gifportal = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+gifportal = "9W4Rag5f4e4qWbNazMTmWthGvkXjJjdK734QejMd2m42"
 
 [registry]
 url = "https://api.apr.dev"
@@ -11,8 +11,5 @@ url = "https://api.apr.dev"
 cluster = "Localnet"
 wallet = "/home/anoy/.config/solana/id.json"
 
-[test]
-startup_wait = 10000
-
 [scripts]
-test = "yarn run mocha -t 1000000 tests/"
+test = "node tests/gifportal.js"
